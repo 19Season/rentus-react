@@ -1,0 +1,22 @@
+.header{
+    display: flex;
+    background-color:#0A5E82;
+    align-items: center;
+    align-content: space-between;
+    color: white;
+}
+.logout{
+    display: flex;
+}
+.sidebar{
+    height: 100vh;
+    background-color: wheat;
+    width: 20%;
+    align-content: center;
+    padding: 5px;
+}
+.sidebar .sidebar-button{
+    margin: 5px;
+    display: block;
+    width: 90%;
+}
