@@ -38,5 +38,42 @@ export function addData(username,password,retryTimes) {
             }
         })
     });
+}
+
+
+export function ShopLogin(username,password,retryTimes) {
+    var data = {
+        "username": username,
+        "password": password,
+    }
+    return new Promise(function (resolve, reject) {
+        axios({
+            method: 'post',
+            url: 'http://localhost:1234/api/shop/signIn',
+            headers: {},
+            data: data
+        }).then((res, err) => {         
+            if (res) {
+                resolve(res.data)
+            } else {
+                console.log(err)
+                reject(err);
+            }
+        }).catch(function (err) {
+            if (retryTimes === 1) {
+                reject(err);
+            } else {
+                setTimeout(() => {
+                    ShopLogin(username,password,retryTimes - 1).then(function (response) {
+                        resolve(response.data);
+                    }).catch(function (error) {
+                        reject(error);
+                    });
+                }, 1000); //retry after 1 sec
+            }
+        })
+    });
+
 
 }
+

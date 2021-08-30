@@ -1,149 +1,105 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { addData } from '../../apicalls/login';
-import { CircularProgress } from '@material-ui/core';
+import React, { Component } from 'react';
+import { addData, ShopLogin} from '../../apicalls/login';
+import NavBar from '../NavBar/NavBar'
+import Footer from '../Footer/Footer';
+import { Button, DropdownButton, Form } from 'react-bootstrap'
+import './login.css'
+import { Dropdown } from 'bootstrap';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+export class loginform extends Component {
+	constructor(props){
+		super(props);
+		this.state={
+			uname:'',
+			psw:'',
+			user:'Client'
+		}
+	}
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+	handleChange=(event)=>{
+		this.setState({[event.target.name]:event.target.value});
+		console.log(this.state.uname)
+		console.log(this.state.psw)
+		console.log(this.state.user)
+		
+	}
 
-export default function SignIn() {
-  const [email,setEmail]=React.useState('')
-  const [password,setPassword]=React.useState('')
-  const [logging,setLogging]=React.useState(false)
-  // console.log('12537')
-  const classes = useStyles();
-  const handleChange=(event)=>
-  {
-    if(event.target.name==='email')
-    {
-      setEmail(event.target.value)
+	handleSubmit=(event)=>{
+		// console.log(this.state.uname,this.state.psw,this.state.user)
+		event.preventDefault();
+		var date=Date.now()
+		if(this.state.user=='Client'){
+			console.log("client");
+		addData(this.state.uname,this.state.psw,3).then((res)=>{
+			if(res=="failed to signin"){
+				alert("incorrect username or password")
+			}else{
+			localStorage.setItem("expiry_time",JSON.stringify(date+8640000));
+			localStorage.setItem("clientInfo",JSON.stringify(res));
+			window.location.href="/";
+			console.log(res);
+			}
+			console.log(localStorage.getItem('userInfo'));	
+		}).catch((err)=>{
+			console.log(err)
+		}
+		)
+	}
+		else{
+			console.log("shop");
+			ShopLogin(this.state.uname,this.state.psw,3).then((res)=>{
+				if(res=="failed to signin"){
+					alert("incorrect username or password")
+				}else{
+				localStorage.setItem("expiry_time",JSON.stringify(date+8640000));
+				localStorage.setItem("shopInfo",JSON.stringify(res));
+				window.location.href=`/shopdash/${res.id}`;
+				console.log(res);
+				}
+				console.log(localStorage.getItem('userInfo'));	
+			}).catch((err)=>{
+				console.log(err)
+					this.setState({uname:'',psw:''});
+			}
+			)
+		}
+	}
+  render() {
+    return (
+<div>
+	
+  <div class="header">
+	<div><NavBar/></div>
+	<div>
+	<div style={{backgroundImage:"url(https://img5.goodfon.com/wallpaper/nbig/9/1d/norvegiia-palatka-raavr-avrapr.jpg)", height:"850px"}}>
+                <Form onSubmit={(event)=>this.handleSubmit(event)} style={{marginLeft:"400px",paddingTop:"50px",paddingBottom:"50px", border:"0px"}}>
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+  <Form.Label style={{color:"White", marginTop:"90px"}}>Username</Form.Label><br></br>
+    <Form.Control name="uname" onChange={(e)=>this.handleChange(e)} required style={{width:"436px"}} type="text" placeholder="Enter your username " required/>
+    </Form.Group>
 
-    }
-    setPassword(event.target.value)
+  <Form.Group className="mb-3" controlId="formBasicPassword">
+    <Form.Label style={{color:"White"}}>Password</Form.Label><br></br>
+    <Form.Control name="psw" onChange={(e)=>this.handleChange(e)} required style={{width:"436px"}} type="password" placeholder="Enter Strong Password" />
+  </Form.Group>
+
+
+  <select className="dropdown" onChange={(e)=>this.handleChange(e)} name="user" >
+	  	<option  value="Client">Login as client</option>
+			<option  value="shop">Login as shop</option>
+	  	  
+</select><br></br><br></br> 
+  <Button onClick={(event)=>this.handleSubmit(event)} style={{height:"50px"}} variant="primary" type="submit">
+    Submit
+  </Button>
+</Form>
+</div>
+</div>
+  <div><Footer/></div>
+</div>
+</div>
+    );
   }
-  const handleSubmit=(ev)=>
-  {
-    ev.preventDefault();
-    console.log(email)
-    console.log(password)
-    setLogging(true)
-    
-addData(email,password,3).then(res=>{
-  setLogging(false)
-  console.log(res)}).catch(err=>console.log(err))
-
-  }
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} onSubmit={(event)=>handleSubmit(event)} >
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            value={email}
-            onChange={(event)=>handleChange(event)}
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event)=>handleChange(event)}
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          
-          >
-            Sign In {logging?<CircularProgress/>:''}
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
-  );
 }
+export default loginform;
+

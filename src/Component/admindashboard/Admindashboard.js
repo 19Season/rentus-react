@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import "./css/volt.css";
-import "./vendor/notyf/notyf.min.css";
-import "./vendor/@fortawesome/fontawesome-free/css/all.min.css";
+import { Button } from '@material-ui/core';
+import React, { Component } from 'react'
+import "../css/volt.css";
+
 
 export default class Admindashboard extends Component {
     render() {
         return (
             <div>
+                <div>
                 <div>
                  <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-md-none">
     <a class="navbar-brand mr-lg-5" href="../../index.html">
@@ -45,138 +46,50 @@ export default class Admindashboard extends Component {
         <li class="nav-item  active ">
           <a onClick={()=>window.location.href='/admindash'} class="nav-link">
             <span class="sidebar-icon"><span class="fas fa-chart-pie"></span></span>
-            <span>Overview</span>
+            <span> Admin Dashboard</span>
           </a>
         </li>
         <li class="nav-item ">
           <a onClick={()=>window.location.href='/products'} class="nav-link">
               <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span>
-              <span>Tools</span>
+              <span>Products </span>
           </a>
         </li>
         <li class="nav-item ">
-          <a onClick={()=>window.location.href='/users'} class="nav-link">
+          <a onClick={()=>window.location.href='/Client'} class="nav-link">
               <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
-              <span>Clients</span>
+              <span>Client</span>
           </a>
         </li>
+        <li class="nav-item ">
+          <a onClick={()=>window.location.href='/Shop'} class="nav-link">
+              <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
+              <span>Shop</span>
+          </a>
+        </li>
+
+
         <li class="nav-item ">
           <a onClick={()=>window.location.href='/orders'} class="nav-link">
               <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
               <span>Order</span>
           </a>
         </li>
-        <li class="nav-item ">
-          <a onClick={()=>window.location.href='/admins'} class="nav-link">
-              <span class="sidebar-icon"><span class="fas fa-cog"></span></span>
-              <span>Admin</span>
-          </a>
+         <li>
+         <div class="btn-group">
+         <Button  variant="contained" color="secondary" onClick={()=>window.location.href='/'}>Logout</Button>
+        </div>
         </li>
       </ul>
     </div>
   </nav>
 
-
-
-
-
-
-
-
-
-
-                
-                    <main class="content">
-
-                        <nav class="navbar navbar-top navbar-expand navbar-dashboard navbar-dark pl-0 pr-2 pb-0">
-    <div class="container-fluid px-0">
-      <div class="d-flex justify-content-between w-100" id="navbarSupportedContent">
-        <div class="d-flex">
-         
-          <form class="navbar-search form-inline" id="navbar-search-main">
-            <div class="input-group input-group-merge search-bar">
-                <span class="input-group-text" id="topbar-addon"><span class="fas fa-search"></span></span>
-                <input type="text" class="form-control" id="topbarInputIconLeft" placeholder="Search" aria-label="Search" aria-describedby="topbar-addon" />
-            </div>
-          </form>
-        </div>
-
-        <ul class="navbar-nav align-items-center">
-         
-          <li class="nav-item dropdown">
-            <a class="nav-link pt-1 px-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <div class="media d-flex align-items-center">
-                <img class="user-avatar md-avatar rounded-circle" alt="Image placeholder" src="" />
-                <div class="media-body ml-2 text-dark align-items-center d-none d-lg-block">
-                  <span class="mb-0 font-small font-weight-bold">Bonnie Green</span>
-                </div>
-              </div>
-            </a>
-            <div class="dropdown-menu dashboard-dropdown dropdown-menu-right mt-2">
-              <a class="dropdown-item font-weight-bold" href="#"><span class="far fa-user-circle"></span>My Profile</a>
-              <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-cog"></span>Settings</a>
-              <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-envelope-open-text"></span>Messages</a>
-              <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-user-shield"></span>Support</a>
-              <div role="separator" class="dropdown-divider"></div>
-              <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-sign-out-alt text-danger"></span>Logout</a>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-                       
-                        
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-light shadow-sm">
-                                    <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                           
-                                            <div class="col-12 col-xl-7 px-xl-0">
-                                                <div class="d-none d-sm-block">
-                                                    <h2 class="h5">Users</h2>
-                                                    <h3 class="mb-1">345k</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-light shadow-sm">
-                                    <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                            <div class="col-12 col-xl-7 px-xl-0">
-                                                <div class="d-none d-sm-block">
-                                                    <h2 class="h5">Books</h2>
-                                                    <h3 class="mb-1">$43,594</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                                <div class="card border-light shadow-sm">
-                                    <div class="card-body">
-                                        <div class="row d-block d-xl-flex align-items-center">
-                                        <div class="col-12 col-xl-7 px-xl-0">
-                                                <div class="d-none d-sm-block">
-                                                    <h2 class="h5">Orders</h2>
-                                                    <h3 class="mb-1">$43,594</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                      </main>  
                 </div>
             </div>
             </div>
         </div>
         </div>
+            </div>
         )
     }
 }
